@@ -1,5 +1,6 @@
-import "./global.css";
 import "./globals.css";
+import "./global.css";
+
 import gradient from "./gradient.png";
 
 import Chunk from "../(components)/Chunk";

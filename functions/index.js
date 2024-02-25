@@ -4,10 +4,10 @@ const { default: OpenAI } = require("openai");
 // // Create and deploy your first functions
 // // https://firebase.google.com/docs/functions/get-started
 //
-exports.helloWorld = functions.https.onRequest((request, response) => {
-  functions.logger.info("Hello logs!", { structuredData: true });
-  response.send("Hello from Firebase!");
-});
+// exports.helloWorld = functions.https.onRequest((request, response) => {
+//   functions.logger.info("Hello logs!", { structuredData: true });
+//   response.send("Hello from Firebase!");
+// });
 
 
 const WHAT_PEOPLE_WANT_TO_DO = [
@@ -33,7 +33,104 @@ We asked the members of the group, "What do you want to do during this trip?", a
   return prompt;
 };
 
-exports.generateIdeas = functions.https.onRequest(async (request, response) => {
+// exports.generateIdeas = functions.https.onRequest(async (request, response) => {
+//   response.set('Access-Control-Allow-Origin', '*');
+
+//   if (request.method === 'OPTIONS') {
+//     // Send response to OPTIONS requests
+//     response.set('Access-Control-Allow-Methods', 'GET');
+//     response.set('Access-Control-Allow-Headers', 'Content-Type');
+//     response.set('Access-Control-Max-Age', '3600');
+//     response.status(204).send('');
+//   }
+
+//   functions.logger.info("body:" + JSON.stringify(request.body), { structuredData: true });
+//   const { names, suggestions, description } = request.body;
+//   const prompt = createPrompt(
+//     names,
+//     suggestions,
+//     description,
+//   );
+//   const openai = new OpenAI({ apiKey: functions.config().OPENAI_API_KEY });
+//   openai.chat.completions.create({
+//     model: "gpt-4-turbo-preview",
+//     messages: [
+//       {
+//         role: "system",
+//         content: "You are an excellent vacation planner."
+//       },
+//       {
+//         role: "user",
+//         content: prompt,
+//       }
+//     ],
+//     functions: [
+//       {
+//         // This defines what format the OpenAI responses can take.
+//         name: "generate_ideas",
+//         parameters: {
+//           "type": "object",
+//           "properties": {
+//             "suggestions": {
+//               "type": "array",
+//               "items": {
+//                 "type": "object",
+//                 "required": ["suggestion", "reasoning"],
+//                 "properties": {
+//                   "suggestion": {
+//                     "type": "string"
+//                   },
+//                   "reasoning": {
+//                     "type": "string"
+//                   }
+//                 }
+//               }
+//             }
+//           },
+//           "required": ["suggestions"]
+//         }
+//       }
+//     ],
+//     // Force the generate_ideas OpenAI function to be called.
+//     function_call: {
+//       name: "generate_ideas"
+//     }
+//   }).then((result) => {
+//     const functionCall = result.choices[0].message.function_call;
+
+//     if (!functionCall) {
+//       response.status(500).send("Failed to generate ideas");
+//       return;
+//     }
+
+//     const chatgptGeneratedSuggestions = JSON.parse(functionCall.arguments);
+
+//     response.send(JSON.stringify(chatgptGeneratedSuggestions.suggestions));
+//   })
+// });
+
+
+const createPromptItinerary = ({
+  suggestions,
+  title,
+  startDate,
+  endDate,
+  description,
+}) => {
+  let prompt = `A group of friends is deciding on how to spend their time for an upcoming trip. Here's a description of what they have planned "${description}" with a title "${title}". How exciting!`
+
+  prompt += "We asked the members of the group, 'What do you want to do during this trip?', and here are their responses:\n";
+  prompt += suggestions.map((suggestion) => `The user said: ${suggestion}\n`).join(" ");
+
+  prompt += `The trip is planned to start on ${startDate} and end on ${endDate}.\n`;
+
+    prompt += "\nNow, it is your turn. Please provide a balanced itinerary for the trip. For each day, write a concise blurb that describes the activities or destinations. Write the start time for the activity in the standard javascript datetime format (e.g. 2022-12-25T10:30:00). Then, give the expected duration in hours."
+
+  prompt = prompt.replace("  ", ' ').replace("  ", ' ').replace("  ", ' ').replace("  ", ' ').replace("  ", ' ').replace("  ", ' ').replace("  ", ' ').replace("  ", ' ').replace("  ", ' ');
+  return prompt;
+}
+
+exports.getIten = functions.https.onRequest(async (request, response) => {
   response.set('Access-Control-Allow-Origin', '*');
 
   if (request.method === 'OPTIONS') {
@@ -45,11 +142,15 @@ exports.generateIdeas = functions.https.onRequest(async (request, response) => {
   }
 
   functions.logger.info("body:" + JSON.stringify(request.body), { structuredData: true });
-  const { names, suggestions, description } = request.body;
-  const prompt = createPrompt(
-    names,
-    suggestions,
-    description,
+  const { suggestions, title, startDate, endDate, description } = request.body;
+  const prompt = createPromptItinerary(
+    {
+      suggestions,
+      title,
+      startDate,
+      endDate,
+      description,
+    }
   );
   const openai = new OpenAI({ apiKey: functions.config().OPENAI_API_KEY });
   openai.chat.completions.create({
@@ -67,33 +168,38 @@ exports.generateIdeas = functions.https.onRequest(async (request, response) => {
     functions: [
       {
         // This defines what format the OpenAI responses can take.
-        name: "generate_ideas",
+        name: "generate_itinerary",
         parameters: {
           "type": "object",
           "properties": {
-            "suggestions": {
+            "itinerary": {
               "type": "array",
               "items": {
                 "type": "object",
-                "required": ["suggestion", "reasoning"],
+                "required": ["start_time", "duration", "description", "title"],
                 "properties": {
-                  "suggestion": {
+                  "start_time": {
                     "type": "string"
                   },
-                  "reasoning": {
+                  "duration": {
+                    "type": "number"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "title": {
                     "type": "string"
                   }
                 }
               }
             }
           },
-          "required": ["suggestions"]
-        }
-      }
-    ],
+          "required": ["itinerary"]
+        },
+      }],
     // Force the generate_ideas OpenAI function to be called.
     function_call: {
-      name: "generate_ideas"
+      name: "generate_itinerary"
     }
   }).then((result) => {
     const functionCall = result.choices[0].message.function_call;
@@ -108,3 +214,4 @@ exports.generateIdeas = functions.https.onRequest(async (request, response) => {
     response.send(JSON.stringify(chatgptGeneratedSuggestions.suggestions));
   })
 });
+

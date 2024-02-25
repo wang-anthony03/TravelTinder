@@ -3,7 +3,7 @@ import React, {useEffect} from "react";
 import {db} from "../../firebase";
 import { getDoc, doc } from "firebase/firestore";
 
-import BeachPic from "./beach.png";
+import BeachPic from "./paris.jpeg"
 
 const getDataFromServer = async (id: string) => {
   "use server";

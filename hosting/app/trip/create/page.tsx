@@ -161,51 +161,53 @@ export default function CreateEvent({ params }) {
           {/* <input type="file" id="add-photo">Add photo</input> */}
 
           <div className={cn("grid gap-2")}>
-      <Popover className="z-50">
-        <PopoverTrigger asChild>
-          <Button
-            id="date"
-            variant={"outline"}
-            className={cn(
-              "w-[300px] justify-start text-left font-normal",
-              !date && "text-muted-foreground"
-            )}
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  id="date"
+                  variant={"outline"}
+                  className={cn(
+                    "w-[300px] justify-start text-left font-normal",
+                    !date && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {date?.from ? (
+                    date.to ? (
+                      <>
+                        {format(date.from, "LLL dd, y")} -{" "}
+                        {format(date.to, "LLL dd, y")}
+                      </>
+                    ) : (
+                      format(date.from, "LLL dd, y")
+                    )
+                  ) : (
+                    <span>Pick a date</span>
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  initialFocus
+                  mode="range"
+                  defaultMonth={date?.from}
+                  selected={date}
+                  onSelect={setDate}
+                  numberOfMonths={2}
+                />
+              </PopoverContent>
+            </Popover>
+            {/* <div className="grid w-full max-w-sm items-center gap-1.5">
+              <Label htmlFor="picture" className="text-xl tracking-normal">Add a header (Optional)</Label>
+              <Input id="picture" type="file" />
+            </div> */}
+          </div>
+          <button
+            onClick={buttonHandler}
+            className="justify-center self-center px-12 py-4 mt-8 text-center whitespace-nowrap border-4 border-black border-solid rounded-[66px] max-md:px-5 max-md:text-4xl"
           >
-            <CalendarIcon className="mr-2 h-4 w-4" />
-            {date?.from ? (
-              date.to ? (
-                <>
-                  {format(date.from, "LLL dd, y")} -{" "}
-                  {format(date.to, "LLL dd, y")}
-                </>
-              ) : (
-                format(date.from, "LLL dd, y")
-              )
-            ) : (
-              <span>Pick a date</span>
-            )}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
-          <Calendar
-            initialFocus
-            mode="range"
-            defaultMonth={date?.from}
-            selected={date}
-            onSelect={setDate}
-            numberOfMonths={2}
-          />
-        </PopoverContent>
-      </Popover>
-      <div className="grid w-full max-w-sm items-center gap-1.5">
-      <Label htmlFor="picture" className={styles.text__header_black}>Add a header (Optional)</Label>
-      <Input id="picture" type="file" />
-    </div>
-    </div>
-        <button onClick={buttonHandler} className={`${styles.trip} text-white`}>
-          Create Trip<span>&#10230;</span>
-        </button>
-
+            Create Trip
+          </button>
         </>
       ) : (
         <div className="p-16 text-3xl tracking-normal">

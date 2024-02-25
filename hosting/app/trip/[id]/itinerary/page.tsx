@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useEffect } from "react";
+import React from "react";
 
 // Helper functions
 function formatDate(date) {
@@ -81,16 +79,43 @@ const toDayOfTheWeek = (start: Date): string => {
   return start.toLocaleString("en-US", options);
 };
 
-export default function ViewItinerary({ params }) {
-  const [days, setDays] = React.useState([]);
+import { getDoc, doc } from "firebase/firestore";
+import { db } from "../../../firebase";
 
-  useEffect(() => {
-    let days = event_data.map((event) => {
-      return new Date(event.start).toDateString();
-    });
+export default async function ViewItinerary({ params }) {
+  const data = await getDoc(doc(db, "lobbies", params.id)).then((doc) => {
+    if (doc.exists()) {
+      return doc.data();
+    } else {
+      console.log("No such document!");
+      return null;
+    }
+  });
+  const iten = await fetch(
+    "https://us-central1-myexpo-8ff01.cloudfunctions.net/getIten",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: data.name,
+        description: data.description,
+        startDate: data.startDate,
+        endDate: data.endDate,
+        suggestions: data.suggestions.map((suggestion) => {
+          return suggestion.suggestion})
+      }),
+    }
+  ).then((response) => response.json());
 
-    setDays(Array.from(new Set(days)));
-  }, []);
+
+  let dates = iten.itinerary.map((event) => {
+    return new Date(event.start);
+  }
+  );
+
+  let days = Array.from(new Set(dates.map((date) => new Date(date).toDateString())));
 
   const downloadCalendar = (event) => {
     event.preventDefault();
@@ -115,9 +140,11 @@ export default function ViewItinerary({ params }) {
       {days.map((day) => {
         return (
           <div
+            // @ts-ignore
             key={day}
             className="mt-5 tracking-tighter max-md:max-w-full max-md:text-4xl"
           >
+            {/* @ts-ignore */}
             <div>{toDayOfTheWeek(day)}</div>
             <ul>
               {event_data
