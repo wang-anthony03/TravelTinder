@@ -4,8 +4,26 @@ import * as React from "react";
 import { useCallback, useState } from "react";
 import { db } from "../../firebase";
 import { addDoc, collection } from "firebase/firestore";
+import { FaRegCopy } from "react-icons/fa";
+
 
 export default function CreateEvent({ params }) {
+  const shareOrCopy = () => {
+    if(navigator.share){
+      
+    }
+
+    let url = ``
+
+
+    const shareData = {
+      title: `Triplete: Team Trip Brainstorming`,
+      text: 'Add your information to the board',
+      url: ``
+  };
+  }
+
+
   const [description, setState] = useState("");
   const [lobbyId, setLobbyId] = useState("");
   const [code, setCode] = useState("");
@@ -54,7 +72,11 @@ export default function CreateEvent({ params }) {
           </button>
         </>
       ) : (
-        <div>Your lobby has been created. The ID is {lobbyId}.</div>
+        <div>Your lobby has been created. The ID is {lobbyId}.<br />
+          <button onClick={shareOrCopy}>
+          Share link <FaRegCopy />
+          </button>
+        </div>
       )}
     </div>
   );
