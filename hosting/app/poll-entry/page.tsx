@@ -1,16 +1,47 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useCallback, MouseEventHandler } from "react";
+import { db } from "../firebase";
+import {
+  collection,
+  addDoc,
+  updateDoc,
+  doc,
+  setDoc,
+  getDoc,
+} from "firebase/firestore";
 
-const SubmitIdeasForm = () => {
+const SubmitIdeasForm = ({ pollKey, userId }) => {
+  pollKey = "1234";
+  userId = "1234";
   const [idea, setIdea] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Here you can submit the idea to your AI or do whatever you need with it
-    console.log("Submitted idea:", idea);
-    // Reset the textarea after submission
-    setIdea("");
-  };
+  const handleSubmit: MouseEventHandler<HTMLInputElement> = useCallback(
+    async (e) => {
+      e.preventDefault();
+      if (!idea.trim()) {
+        return;
+      }
+
+      try {
+        // const pollDocumentRef = doc(db, `/polls/${pollKey}`);
+        // await updateDoc(pollDocumentRef, {
+        //   [`ideas.1234`]: idea,
+        //   x: "y",
+        // });
+        // console.log("Idea submitted:", idea);
+        // Create an initial document to update.
+        const pollDoc = doc(db, "polls", pollKey);
+        // To update age and favorite color:
+        await updateDoc(pollDoc, {
+          [`ideas.${userId}`]: idea,
+        });
+        setIdea("");
+      } catch (error) {
+        console.error("Error submitting idea:", error);
+      }
+    },
+    [idea, pollKey, userId]
+  );
 
   return (
     <div style={{ maxWidth: "600px", margin: "0 auto" }}>
