@@ -1,4 +1,6 @@
 "use client";
+import "./Chunk.module.css";
+import styles from "./Chunk.module.css"
 
 import React, { useState } from "react";
 
@@ -18,18 +20,22 @@ const UsernameField: React.FC<UsernameFieldProps> = ({ onSubmit }) => {
 
   return (
     <div>
-      <p>Let's get some information</p>
+      <p className={styles.text__header}>Let's get some information</p>
       <div>
-        <label htmlFor="firstName">Name: </label>
+        <label className={styles.text__header} htmlFor="firstName">Name: </label>
         <input
+          className = {styles.input__field}
           type="text"
           id="firstName"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Enter your name"
+          placeholder="Enter Here"
         />
       </div>
-      {name && <p>Hello, {name}!</p>}
+      <div className={styles.text__header__align}>
+        {name && <p>Hello, {name}!</p>}
+      </div>
+
       <button
         onClick={handleSubmit}
         style={{

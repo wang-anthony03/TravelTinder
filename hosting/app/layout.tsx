@@ -22,9 +22,6 @@ export default function RootLayout({
               <div className="max-md:max-w-full">
                 <Chunk />
               </div>
-              <a href="/login" className="justify-center px-7 py-2.5 my-auto text-2xl tracking-wider text-black whitespace-nowrap border-4 border-black border-solid shadow-sm max-md:px-5">
-                Login
-              </a>
             </div>
             {children}
           </div>

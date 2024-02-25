@@ -9,6 +9,7 @@ import {
   setDoc,
   getDoc,
 } from "firebase/firestore";
+import styles from "./Chunk.module.css";
 
 interface PreferenceFieldProps {
   lobbyKey: string;
@@ -48,13 +49,13 @@ const SubmitIdeasForm: React.FC<PreferenceFieldProps> = ({
 
   return (
     <div style={{ maxWidth: "600px", margin: "0 auto" }}>
-      <h1>Triplet</h1>
-      <h2>Submit Your Ideas</h2>
+      <h2 className={styles.text__header}>Submit Your Ideas</h2>
       <form
         onSubmit={handleSubmit}
         style={{ display: "flex", flexDirection: "column" }}
       >
         <textarea
+          className = {styles.input__field}
           value={idea}
           onChange={(e) => setIdea(e.target.value)}
           placeholder="Enter your idea..."

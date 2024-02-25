@@ -14,6 +14,34 @@
     animation: profile__animate 8s ease-in-out infinite 1s; 
 }
 
+.input__field {
+    padding: 0;
+    height: 30px;
+    position: relative;
+    left: 0;
+    outline: none;
+    border: 1px solid #cdcdcd;
+    border-color: rgba(0,0,0,.15);
+    background-color: white;
+    font-size: 16px;
+}
+
+.text__header{
+    color: #fff;
+    font-family: Playfair Display, serif;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.text__header__align{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #fff;
+    font-family: Playfair Display, serif;
+    font-weight: bold;
+    text-align:center
+}
+
 @keyframes profile__animate {
     0% {
         border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
