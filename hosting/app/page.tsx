@@ -60,7 +60,7 @@ export default function Page() {
         <div className="mt-8 text-4xl tracking-tighter max-md:max-w-full">
           Schedule
         </div>
-        <div className="mt-8 ml-14 w-[635px] max-md:max-w-full">
+        <div className="mt-8 ml-14 font-medium max-md:max-w-full">
           After this a tentative is created. This is{" "}
           <span className="font-bold">not</span> designed to be perfect. Rather,
           a jumping-off point for future conversation.
