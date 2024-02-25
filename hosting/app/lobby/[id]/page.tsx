@@ -6,33 +6,57 @@ import PreferenceData from "../../../(components)/PreferenceData";
 import WaitingPage from "../../../(components)/WaitingPage";
 import { db } from "../../firebase";
 import { collection, doc, getDoc } from "firebase/firestore";
+import LobbyManagement from "./LobbyManagement";
+
+export interface AIGeneratedSuggestion {
+  suggestion: string;
+  reasoning: string;
+}
 
 const MainPage = ({ params }) => {
   const { id: lobbyId } = params;
   const [userName, setUserName] = useState("");
+  const [aiGeneratedSuggestions, setAIGeneratedSuggestions] =
+    useState<AIGeneratedSuggestion[]>();
   const [userState, setUserState] = useState(0);
 
   useEffect(() => {
     getDoc(doc(db, "lobbies", lobbyId)).then((doc) => {
       const data = doc.data();
-      if (data.isClosed) {
-        setUserState(3);
+      if (data.generatedSuggestions !== undefined) {
+        setAIGeneratedSuggestions(data.generatedSuggestions);
       }
       console.log(doc.data());
     });
   }, []);
 
   // Handler to be called from UsernameField when the submit button is clicked
-  const handleUsernameSubmit = useCallback((name: string) => {
-    setUserName(name);
-    setUserState(1);
-  }, []);
+  const handleUsernameSubmit = useCallback(
+    (name: string) => {
+      setUserName(name);
+      if (aiGeneratedSuggestions) {
+        setUserState(2);
+      } else {
+        setUserState(1);
+      }
+    },
+    [aiGeneratedSuggestions]
+  );
 
   const handlePreferenceSubmit = useCallback(() => {
     setUserState(2); // Update the userState to 2
   }, []);
   return (
     <div>
+      {aiGeneratedSuggestions ? (
+        <p>
+          Suggestions have been generated. Go
+          <a href={`/trip/${lobbyId}/vote`}>here</a>
+          to cast your vote!
+        </p>
+      ) : (
+        <LobbyManagement lobbyId={lobbyId} />
+      )}
       {userState === 0 && <UsernameField onSubmit={handleUsernameSubmit} />}
       {userState === 1 && (
         <PreferenceData
@@ -41,12 +65,8 @@ const MainPage = ({ params }) => {
           userId={userName}
         />
       )}
-      {userState === 2 && <WaitingPage />}
-      {userState === 3 && (
-        <div>
-          <h1>Lobby has been closed. Schedule is created below.</h1>
-          <p>Placeholder schedule goes here</p>
-        </div>
+      {userState === 2 && (
+        <>{aiGeneratedSuggestions ? <WaitingPage /> : <></>}</>
       )}
     </div>
   );

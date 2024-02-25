@@ -37,7 +37,7 @@ export default function LobbyManagement({ lobbyId }) {
           description: data.description,
         }),
       }
-    );
+    ).then((response) => response.json());
     // Update the document to include them.
     await updateDoc(doc(db, "lobbies", lobbyId), {
       generatedSuggestions,
