@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import Chunk from "../../../(components)/Chunk";
 import BeachPic from "./beach.png";
 
 export default function MyComponent({ params }: { params: { id: string } }) {
