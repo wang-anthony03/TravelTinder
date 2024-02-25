@@ -23,14 +23,16 @@ export default function Page() {
             </div>
           </div>
           <div className="flex flex-col items-center self-center mt-7 max-w-full text-2xl font-bold tracking-wider text-black w-[830px]">
-            <div className="self-end text-5xl tracking-tighter text-center w-[551px] max-md:max-w-full max-md:text-4xl">
-              End Planning Procrastinating
-            </div>
-            <div className="self-end mt-4 italic text-center w-[570px] max-md:max-w-full">
-              Trip Dump is a
-              <span className="italic">structured brainstorming session</span>{" "}
-              for your to plan you next{" "}
-              <span className="italic">group trip </span>
+            <div className="text-center items-center">
+              <div className="text-5xl tracking-tighter text-center max-md:max-w-full max-md:text-4xl">
+                End Planning Procrastinating
+              </div>
+              <div className="mt-4 italic text-center max-md:max-w-full">
+                Trip Dump is a
+                <span className="italic">structured brainstorming session</span>{" "}
+                for your to plan you next{" "}
+                <span className="italic">group trip </span>
+              </div>
             </div>
             <div className="self-stretch mt-60 text-5xl tracking-tighter max-md:mt-10 max-md:max-w-full max-md:text-4xl">
               Kahoot for trip planning.
