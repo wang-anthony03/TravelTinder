@@ -26,7 +26,6 @@ const MainPage = ({ params }) => {
       if (data.generatedSuggestions !== undefined) {
         setAIGeneratedSuggestions(data.generatedSuggestions);
       }
-      console.log(doc.data());
     });
   }, []);
 
@@ -66,7 +65,7 @@ const MainPage = ({ params }) => {
         />
       )}
       {userState === 2 && (
-        <>{aiGeneratedSuggestions ? <WaitingPage /> : <></>}</>
+        <>{aiGeneratedSuggestions && <WaitingPage />}</>
       )}
     </div>
   );

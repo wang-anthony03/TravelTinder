@@ -1,14 +1,44 @@
+"use client";
 import * as React from "react";
 
 import HorizontalTripCard from "../HorizontalTripCard";
 
-import Suggestion from "../../../../(components)/Suggestion";
+import VoteCollector from "../../../../(components)/VoteCollector";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../../firebase";
 
 export default function VoteView({ params }: { params: { id: string } }) {
+  const { id: lobbyId } = params;
+  const [documentData, setDocumentData] = React.useState<any>({});
+
+  React.useEffect(() => {
+    getDoc(doc(db, "lobbies", lobbyId)).then((doc) => {
+      setDocumentData(doc.data());
+    });
+  }, [lobbyId]);
+
   return (
     <>
       <HorizontalTripCard />
       <div className="flex flex-col px-8 pt-5 pb-12 text-black bg-white shadow-sm max-w-[888px] rounded-[30px] max-md:px-5">
+        {documentData === null ? (
+          <>
+            <p>Loading...</p>
+          </>
+        ) : documentData.generatedSuggestions ? (
+          <VoteCollector
+            suggestions={documentData.generatedSuggestions}
+            onVotesCollected={(votes) => {
+              console.log("Votes collected");
+              console.log(votes);
+            }}
+          />
+        ) : (
+          <p>
+            Waiting for people to submit their preferences. Come back later to
+            vote on your favorite activities!
+          </p>
+        )}
         <div className="text-6xl font-bold tracking-tighter max-md:max-w-full max-md:text-4xl">
           The Results Are In...
         </div>
@@ -35,8 +65,6 @@ export default function VoteView({ params }: { params: { id: string } }) {
         <div className="mt-5 text-5xl font-bold tracking-tighter max-md:max-w-full max-md:text-4xl">
           Come check back in when everyone votes
         </div>
-
-        <Suggestion />
       </div>
     </>
   );
