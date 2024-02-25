@@ -6,10 +6,7 @@ import { doc, getDoc } from "firebase/firestore";
 const WaitingComponent = () => {
   return (
     <div>
-      <p>
-        Thank you for submitting your preferences. Soon, our AI will suggest
-        activities, and you will be able to rate them!
-      </p>
+      <span className="loading loading-spinner loading-lg"></span>{" "}Waiting...
     </div>
   );
 };
