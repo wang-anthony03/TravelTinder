@@ -7,7 +7,7 @@ export default function Chunk() {
         <Logo />
         <div className="flex flex-col ml-5 w-1/2 max-md:ml-0 max-md:w-full">
           <div className="self-stretch my-auto text-7xl font-bold tracking-tighter text-black whitespace-nowrap max-md:mt-10 max-md:text-4xl">
-            Trip Dump
+            Trip-let
           </div>
         </div>
       </a>

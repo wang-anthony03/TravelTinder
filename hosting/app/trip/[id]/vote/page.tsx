@@ -2,6 +2,8 @@ import * as React from "react";
 
 import HorizontalTripCard from "../HorizontalTripCard";
 
+import Suggestion from "../../../../(components)/Suggestion";
+
 export default function VoteView({ params }: { params: { id: string } }) {
   return (
     <>
@@ -33,6 +35,8 @@ export default function VoteView({ params }: { params: { id: string } }) {
         <div className="mt-5 text-5xl font-bold tracking-tighter max-md:max-w-full max-md:text-4xl">
           Come check back in when everyone votes
         </div>
+
+        <Suggestion />
       </div>
     </>
   );

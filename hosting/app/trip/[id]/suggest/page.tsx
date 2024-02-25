@@ -1,8 +1,19 @@
-import * as React from "react";
+"use client";
+import React, {useEffect, useState} from "react";
 
 import HorizontalTripCard from "../HorizontalTripCard";
 
 export default function Suggest({ params }: { params: { id: string } }) {
+  const [suggestions, setSuggestions] = useState([]);
+
+  // gets the items in the database
+  useEffect(() => {
+    const getData = async () => {
+      
+    }
+
+  }, [suggestions])
+
   return (
     <div className="flex flex-col max-w-[888px]">
       <div className="w-full border border-black border-solid rounded-[30px] max-md:max-w-full">
@@ -15,10 +26,14 @@ export default function Suggest({ params }: { params: { id: string } }) {
         <div className="mt-8 text-4xl italic font-medium tracking-tighter max-md:max-w-full">
           I saw this really cool jet ski rental place, I think we should go
         </div>
-        <div className="justify-center self-center px-12 py-4 mt-16 mb-2.5 text-center whitespace-nowrap border-4 border-black border-solid rounded-[66px] max-md:px-5 max-md:mt-10 max-md:text-4xl">
+        <button className="justify-center self-center px-12 py-4 mt-16 mb-2.5 text-center whitespace-nowrap border-4 border-black border-solid rounded-[66px] max-md:px-5 max-md:mt-10 max-md:text-4xl">
           Add
-        </div>
+        </button>
       </div>
+
+      <ul>
+        
+      </ul>
     </div>
   );
 }

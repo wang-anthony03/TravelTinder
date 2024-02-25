@@ -7,7 +7,7 @@ export default function MyComponent({ params }: { params: { id: string } }) {
 
   return (
     <div className="flex flex-col ml-5 w-[73%] max-md:ml-0 max-md:w-full">
-      <div className="flex relative flex-col grow mt-16 text-black max-md:mt-10 max-md:max-w-full">
+      <div className="flex flex-col mt-16 rounded-xl text-black max-md:mt-10 max-md:max-w-full">
         <img
           loading="lazy"
           src={BeachPic.src}
@@ -18,7 +18,7 @@ export default function MyComponent({ params }: { params: { id: string } }) {
             <div className="text-5xl font-bold tracking-tighter max-md:max-w-full max-md:text-4xl">
               Spring Break: Virginia Beach
             </div>
-            <div className="self-start mt-7 ml-2.5 text-3xl tracking-widest max-md:max-w-full">
+            <div className="mt-7 ml-2.5 text-3xl tracking-widest max-md:max-w-full">
               Outdoors club is going to the beach
             </div>
           </div>
@@ -27,9 +27,9 @@ export default function MyComponent({ params }: { params: { id: string } }) {
             <div className="mt-6 text-2xl tracking-wider">
               9 people already joined
             </div>
-            <div className="justify-center self-start px-12 py-4 mt-10 text-5xl tracking-tighter text-center border-4 border-black border-solid rounded-[66px] max-md:px-5 max-md:text-4xl">
+            <a href={`/trip/${pageId}/suggest`} className="justify-center px-12 py-4 mt-10 text-5xl tracking-tighter text-center border-4 border-black border-solid rounded-3xl max-md:px-5 max-md:text-4xl">
               Join
-            </div>
+            </a>
           </div>
         </div>
       </div>

@@ -29,9 +29,9 @@ export default function ViewResults({ params }) {
           <div className="text-5xl tracking-tighter max-md:text-4xl">👍</div>
         </div>
       </div>
-      <div className="mt-5 text-5xl font-bold tracking-tighter max-md:max-w-full max-md:text-4xl">
+      <a href="itinerary" className="mt-5 text-5xl font-bold tracking-tighter max-md:max-w-full max-md:text-4xl">
         Check out the generated itenerary -&gt;
-      </div>
+      </a>
     </div>
   );
 }
