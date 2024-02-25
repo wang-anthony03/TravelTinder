@@ -1,5 +1,5 @@
 import React from 'react'; 
-import LobbyManager from '../components/LobbyManager'; 
+import LobbyManager from '../(components)/LobbyManager'; 
 
 export default function Page() {
   return (
