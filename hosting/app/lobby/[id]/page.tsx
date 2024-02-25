@@ -1,18 +1,31 @@
-'use client';
+"use client";
 
-import React, { useState, useCallback } from 'react';
-import UsernameField from '../../../(components)/UsernameField';
-import PreferenceData from '../../../(components)/PreferenceData';
-import WaitingPage from '../../../(components)/WaitingPage';
+import React, { useState, useCallback, useEffect } from "react";
+import UsernameField from "../../../(components)/UsernameField";
+import PreferenceData from "../../../(components)/PreferenceData";
+import WaitingPage from "../../../(components)/WaitingPage";
+import { db } from "../../firebase";
+import { collection, doc, getDoc } from "firebase/firestore";
 
 const MainPage = ({ params }) => {
+  const { id: lobbyId } = params;
+  const [userName, setUserName] = useState("");
   const [userState, setUserState] = useState(0);
-  const [firstName, setFirstName] = useState('');
+
+  useEffect(() => {
+    getDoc(doc(db, "lobbies", lobbyId)).then((doc) => {
+      const data = doc.data();
+      if (data.isClosed) {
+        setUserState(3);
+      }
+      console.log(doc.data());
+    });
+  }, []);
 
   // Handler to be called from UsernameField when the submit button is clicked
   const handleUsernameSubmit = useCallback((name: string) => {
-    setFirstName(name); // You can store the name if needed
-    setUserState(1);    // Update the userState to 1 to show the next component
+    setUserName(name);
+    setUserState(1);
   }, []);
 
   const handlePreferenceSubmit = useCallback(() => {
@@ -21,9 +34,20 @@ const MainPage = ({ params }) => {
   return (
     <div>
       {userState === 0 && <UsernameField onSubmit={handleUsernameSubmit} />}
-      {userState === 1 && <PreferenceData onSubmit={handlePreferenceSubmit} />}
-      console.log('userState:', userState);
-      {userState === 2 && <WaitingPage/>}
+      {userState === 1 && (
+        <PreferenceData
+          onSubmit={handlePreferenceSubmit}
+          lobbyKey={lobbyId}
+          userId={userName}
+        />
+      )}
+      {userState === 2 && <WaitingPage />}
+      {userState === 3 && (
+        <div>
+          <h1>Lobby has been closed. Schedule is created below.</h1>
+          <p>Placeholder schedule goes here</p>
+        </div>
+      )}
     </div>
   );
 };

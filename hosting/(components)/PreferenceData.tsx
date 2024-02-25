@@ -11,15 +11,19 @@ import {
 } from "firebase/firestore";
 
 interface PreferenceFieldProps {
-    onSubmit: (firstName: string) => void; // Pass the first name back on submit
+  lobbyKey: string;
+  userId: string;
+  onSubmit: () => void;
 }
 
-const SubmitIdeasForm : React.FC<PreferenceFieldProps> = ({ pollKey: lobbyKey, userId }) => {
-  lobbyKey = "1234";
-  userId = "1234";
+const SubmitIdeasForm: React.FC<PreferenceFieldProps> = ({
+  lobbyKey,
+  userId,
+  onSubmit,
+}) => {
   const [idea, setIdea] = useState("");
 
-  const handleSubmit: MouseEventHandler<HTMLInputElement> = useCallback(
+  const handleSubmit: MouseEventHandler<HTMLFormElement> = useCallback(
     async (e) => {
       e.preventDefault();
       if (!idea.trim()) {
@@ -34,6 +38,7 @@ const SubmitIdeasForm : React.FC<PreferenceFieldProps> = ({ pollKey: lobbyKey, u
           [`ideas.${userId}`]: idea,
         });
         setIdea("");
+        onSubmit();
       } catch (error) {
         console.error("Error submitting idea:", error);
       }
