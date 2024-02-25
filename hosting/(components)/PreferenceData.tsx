@@ -12,9 +12,9 @@ import {
 import styles from "./Chunk.module.css";
 
 interface PreferenceFieldProps {
-  lobbyKey: string;
-  userId: string;
-  onSubmit: () => void;
+  lobbyKey?: any;
+  userId?: any;
+  onSubmit: any;
 }
 
 const SubmitIdeasForm: React.FC<PreferenceFieldProps> = ({

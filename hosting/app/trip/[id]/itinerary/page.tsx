@@ -70,11 +70,14 @@ const addToDate = (start: Date, diff: number): string => {
     minute: "2-digit",
   };  
 
+  // @ts-ignore
   return cpyDate.toLocaleString([], date_options);
 };
 
 const toDayOfTheWeek = (start: Date): string => {
   var options = { weekday: "long", month: "long", day: "numeric" };
+
+  // @ts-ignore
   return start.toLocaleString("en-US", options);
 };
 
