@@ -22,7 +22,7 @@ export default function Page() {
           </div>
          
         </div>
-        <a href="/trip/create" className="px-5 py-2 mt-12 text-2xl w-min self-center tracking-tighter text-center whitespace-nowrap border-2 border-black border-solid rounded-3xl">
+        <a href="/trip/create" className="px-5 py-2 mt-12 text-2xl w-min self-center text-white tracking-tighter text-center whitespace-nowrap border-2 border-white border-solid rounded-3xl">
             Create a Trip
           </a>
         
@@ -79,7 +79,7 @@ export default function Page() {
           <div className="mt-24 text-5xl tracking-tighter text-center">
             Interested?
           </div>
-          <a href="/trip/create" className="justify-center px-12 py-4 mt-6 text-5xl tracking-tighter text-center whitespace-nowrap border-4 border-black border-solid rounded-3xl">
+          <a href="/trip/create" className="justify-center px-12 py-4 mt-6 text-5xl tracking-tighter text-center whitespace-nowrap border-4 border-white border-solid rounded-3xl">
             Create a Trip
           </a>
           
