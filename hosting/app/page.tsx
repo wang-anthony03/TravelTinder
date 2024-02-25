@@ -13,7 +13,7 @@ export default function Page() {
             End Planning Procrastinating
           </div>
           <div className="mt-4 italic text-center max-md:max-w-full">
-            Trip Dump is a
+            Trip Dump is a{" "}
             <span className="italic">structured brainstorming session</span> for
             your to plan you next <span className="italic">group trip </span>
           </div>
