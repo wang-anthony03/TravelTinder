@@ -36,6 +36,17 @@ We asked the members of the group, "What do you want to do during this trip?", a
 };
 
 exports.generateIdeas = functions.https.onRequest(async (request, response) => {
+  res.set('Access-Control-Allow-Origin', '*');
+
+  if (req.method === 'OPTIONS') {
+    // Send response to OPTIONS requests
+    res.set('Access-Control-Allow-Methods', 'GET');
+    res.set('Access-Control-Allow-Headers', 'Content-Type');
+    res.set('Access-Control-Max-Age', '3600');
+    res.status(204).send('');
+  }
+
+  functions.logger.info("body:" + JSON.stringify(request.body), { structuredData: true });
   const { names, suggestions, tripLocation, startDate, endDate } = request.body;
   const prompt = createPrompt(
     names,
@@ -45,7 +56,7 @@ exports.generateIdeas = functions.https.onRequest(async (request, response) => {
     endDate
   );
   const openai = new OpenAI({ apiKey: functions.config().OPENAI_API_KEY });
-  const result = await openai.chat.completions.create({
+  openai.chat.completions.create({
     messages: [
       {
         role: "system",
@@ -87,15 +98,16 @@ exports.generateIdeas = functions.https.onRequest(async (request, response) => {
     function_call: {
       name: "generate_ideas"
     }
-  });
-  const functionCall = result.choices[0].message.function_call;
+  }).then((result) => {
+    const functionCall = result.choices[0].message.function_call;
 
-  if (!functionCall) {
-    response.status(500).send("Failed to generate ideas");
-    return;
-  }
+    if (!functionCall) {
+      response.status(500).send("Failed to generate ideas");
+      return;
+    }
 
-  const chatgptGeneratedSuggestions = JSON.parse(functionCall.arguments);
+    const chatgptGeneratedSuggestions = JSON.parse(functionCall.arguments);
 
-  response.send(JSON.stringify(chatgptGeneratedSuggestions.suggestions));
+    response.send(JSON.stringify(chatgptGeneratedSuggestions.suggestions));
+  })
 });
