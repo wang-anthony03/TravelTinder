@@ -21,7 +21,7 @@ export default function Page() {
         <div className="self-stretch mt-60 text-5xl tracking-tighter max-md:mt-10 max-md:max-w-full max-md:text-4xl">
           Kahoot for trip planning.
         </div>
-        <div className="mt-6   max-md:max-w-full">
+        <div className="mt-6 tracking-wider font-medium max-md:max-w-full">
           The leader of the group creates a trip: sends a link to add people and
           then the session starts
         </div>
@@ -31,23 +31,23 @@ export default function Page() {
         <div className="mt-16 ml-14 text-4xl tracking-tighter max-md:mt-10 max-md:max-w-full">
           Create a Event
         </div>
-        <div className="tracking-wider">
+        <div className="tracking-wider font-medium">
           With a name, description and date range, create a data range to send
           out through a custom link.
         </div>
         <div className="text-4xl tracking-tighter max-md:max-w-full">
           Brain Dump
         </div>
-        <div className="tracking-wider max-md:max-w-full">
+        <div className="tracking-wider font-medium max-md:max-w-full">
           Everyone writes what they think the group should do. All posts are
           anonymous. This is a non-judgmental time to get ideas on the table.
           <br />
           Send images, Pinterest & Instagram posts and more
         </div>
-        <div className="mt-8 text-4xl tracking-tighter font-medium max-md:max-w-full">
+        <div className="mt-8 text-4xl tracking-tighter max-md:max-w-full">
           Aggregate
         </div>
-        <div className="mt-8 max-md:max-w-full">
+        <div className="mt-8 tracking-wider font-medium max-md:max-w-full">
           Similar ideas are grouped into themes (e.g. go to a museum and go to
           the met are combined).
         </div>
