@@ -2,27 +2,28 @@
 
 import * as React from "react";
 import { useCallback, useState, useEffect } from "react";
-import { db, storage  } from "../../firebase";
-import { uploadBytes } from "firebase/storage";
+import { db } from "../../firebase";
 import { addDoc, collection } from "firebase/firestore";
 import { FaRegCopy } from "react-icons/fa";
 import TextTransition, { presets } from "react-text-transition";
 
-import { addDays, format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
-import { DateRange } from "react-day-picker";
+import { addDays, format } from "date-fns"
+import { Calendar as CalendarIcon } from "lucide-react"
+import { DateRange } from "react-day-picker"
 
+ 
 import { cn } from "../../../@/lib/utils";
 import { Button } from "../../../@/components/ui/button";
 import { Calendar } from "../../../@/components/ui/calendar";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 
+import styles from "../../../(components)/Chunk.module.css"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "../../../@/components/ui/popover";
+} from "../../../@/components/ui/popover"
 
 const TEXTS = [
   "Go to the Beach",
@@ -49,10 +50,10 @@ const TEXTS = [
   "Take a Hot Air Balloon Ride",
 ];
 
-import { Metadata } from "next";
+import { Metadata } from 'next'
 
-import { ref } from "firebase/storage";
-import { v4 as UUID } from "uuid";
+import { UUID } from "crypto";
+
 // export const metadata: Metadata = {
 //  title: 'Create Event | Trippl',
 //   description: 'Create a new event',
@@ -63,7 +64,7 @@ export default function CreateEvent({ params }) {
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: new Date(),
     to: addDays(new Date(), 7),
-  });
+  })
 
   const shareOrCopy = () => {
     let url = `https://myexpo-8ff01.web.app/trip/${lobbyId}`;
@@ -114,51 +115,15 @@ export default function CreateEvent({ params }) {
     }
 
     try {
-      let documnet_data = {};
-      // @ts-ignore
-      if (false && document.getElementById("picture").files[0]) {
-        // @ts-ignore
-        const file = document.getElementById("picture").files[0];
+      // if(document.getElementById("i"))
 
-        const storageRef = ref(storage, "images/" + UUID() + file.name);
-
-        uploadBytes(storageRef, file).then((snapshot) => {
-          console.log("Uploaded a blob or file!");
-
-          documnet_data = {
-            title,
-            description,
-            code,
-            image: snapshot.ref.fullPath,
-          };
-
-          console.log(documnet_data);
-
-          addDoc(collection(db, "lobbies"), {
-            description,
-            code,
-          }).then((docRef) => {
-            const lobbyId = docRef.id;
-            setLobbyId(lobbyId);
-            console.log("Document written with ID: ", docRef.id);
-          });
-        });
-      } else {
-        documnet_data = {
-          title,
-          description,
-          code,
-          startDate: date.from,
-          endDate: date.to,
-        };
-
-        let docRef = await addDoc(collection(db, "lobbies"), documnet_data);
-
-        const lobbyId = docRef.id;
-        setLobbyId(lobbyId);
-        console.log("Document written with ID: ", docRef.id);
-        console.log("Document written with ID: ", lobbyId);
-      }
+      const docRef = await addDoc(collection(db, "lobbies"), {
+        description,
+        code,
+      });
+      const lobbyId = docRef.id;
+      setLobbyId(lobbyId);
+      console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -173,7 +138,7 @@ export default function CreateEvent({ params }) {
       </div>
       {lobbyId.length === 0 ? (
         <>
-          <textarea
+        <textarea
             className="outline-none bg-transparent mt-8 text-4xl placeholder:font-black placeholder:opacity-100 placeholder:font-medium font-medium tracking-wider max-md:max-w-full"
             placeholder="A fun little club trip.."
             value={title}
@@ -196,64 +161,59 @@ export default function CreateEvent({ params }) {
           {/* <input type="file" id="add-photo">Add photo</input> */}
 
           <div className={cn("grid gap-2")}>
-            <Popover className="z-50">
-              <PopoverTrigger asChild>
-                <Button
-                  id="date"
-                  variant={"outline"}
-                  className={cn(
-                    "w-[300px] justify-start text-left font-normal",
-                    !date && "text-muted-foreground"
-                  )}
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {date?.from ? (
-                    date.to ? (
-                      <>
-                        {format(date.from, "LLL dd, y")} -{" "}
-                        {format(date.to, "LLL dd, y")}
-                      </>
-                    ) : (
-                      format(date.from, "LLL dd, y")
-                    )
-                  ) : (
-                    <span>Pick a date</span>
-                  )}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
-                <Calendar
-                  initialFocus
-                  mode="range"
-                  defaultMonth={date?.from}
-                  selected={date}
-                  onSelect={setDate}
-                  numberOfMonths={2}
-                />
-              </PopoverContent>
-            </Popover>
-            {/* <div className="grid w-full max-w-sm items-center gap-1.5">
-              <Label htmlFor="picture" className="text-xl tracking-normal">Add a header (Optional)</Label>
-              <Input id="picture" type="file" />
-            </div> */}
-          </div>
-          <button
-            onClick={buttonHandler}
-            className="justify-center self-center px-12 py-4 mt-8 text-center whitespace-nowrap border-4 border-black border-solid rounded-[66px] max-md:px-5 max-md:text-4xl"
+      <Popover className="z-50">
+        <PopoverTrigger asChild>
+          <Button
+            id="date"
+            variant={"outline"}
+            className={cn(
+              "w-[300px] justify-start text-left font-normal",
+              !date && "text-muted-foreground"
+            )}
           >
-            Create Trip
-          </button>
+            <CalendarIcon className="mr-2 h-4 w-4" />
+            {date?.from ? (
+              date.to ? (
+                <>
+                  {format(date.from, "LLL dd, y")} -{" "}
+                  {format(date.to, "LLL dd, y")}
+                </>
+              ) : (
+                format(date.from, "LLL dd, y")
+              )
+            ) : (
+              <span>Pick a date</span>
+            )}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0" align="start">
+          <Calendar
+            initialFocus
+            mode="range"
+            defaultMonth={date?.from}
+            selected={date}
+            onSelect={setDate}
+            numberOfMonths={2}
+          />
+        </PopoverContent>
+      </Popover>
+      <div className="grid w-full max-w-sm items-center gap-1.5">
+      <Label htmlFor="picture">Add a header (Optional)</Label>
+      <Input id="picture" type="file" />
+    </div>
+    </div>
+        <button onClick={buttonHandler} className={`${styles.trip} text-white`}>
+          Create Trip<span>&#10230;</span>
+        </button>
+
         </>
       ) : (
         <div className="p-16 text-3xl tracking-normal">
-          Your event "{description}" has been created. <br />
-          <br /> Share the private url to get input
+          Your event "{description}" has been created. <br /><br />  Share the private url to
+          get input
           <br />
           <div className="flex flex-row justify-between mt-5">
-            <a
-              href={`/trip/${lobbyId}`}
-              className="btn text-4xl text-white flex flex-row bg-gray-500 block"
-            >
+            <a href={`/trip/${lobbyId}`}className="btn text-4xl text-white flex flex-row bg-gray-500 block">
               Go to event
             </a>
             <button

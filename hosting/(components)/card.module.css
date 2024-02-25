@@ -1,0 +1,41 @@
+@property --gardient-angle{
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+:root {
+    --clr-1: #052b2f;
+    --clr-2: #073438;
+    --clr-3: #0e4b50;
+    --clr-4: #2d8f85;
+    --clr-5: #637c54;
+}
+
+body {
+    background: var(--clr-2);
+    min-height: 2vh;
+    display: grid;
+    place-content: center;
+
+}
+.card {
+    height: 900vh;
+    background: var(--clr-1);
+    border-radius: .5rem;
+    position: relative;
+}
+
+.card::before
+.card::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--clr-5);
+    border-radius:inherit;
+
+}
+
+.card::after{
+    filter: blur(3.5rem);
+}
