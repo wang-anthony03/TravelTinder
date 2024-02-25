@@ -10,12 +10,16 @@ import {
   getDoc,
 } from "firebase/firestore";
 
-const SubmitIdeasForm = ({ pollKey: lobbyKey, userId }) => {
+interface PreferenceFieldProps {
+    onSubmit: (firstName: string) => void; // Pass the first name back on submit
+}
+
+const SubmitIdeasForm : React.FC<PreferenceFieldProps> = ({ pollKey: lobbyKey, userId }) => {
   lobbyKey = "1234";
   userId = "1234";
   const [idea, setIdea] = useState("");
 
-  const handleSubmit: MouseEventHandler<HTMLFormElement> = useCallback(
+  const handleSubmit: MouseEventHandler<HTMLInputElement> = useCallback(
     async (e) => {
       e.preventDefault();
       if (!idea.trim()) {
