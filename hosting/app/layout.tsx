@@ -11,7 +11,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="flex overflow-hidden relative flex-col justify-center items-center px-16 py-12 w-full max-md:px-5 max-md:max-w-full">
+        <div className="flex overflow-hidden relative flex-col justify-center items-center px-16 py-12 w-full max-md:px-5 max-md:max-w-full min-h-screen">
           <img
             loading="lazy"
             srcSet={gradient.src}
