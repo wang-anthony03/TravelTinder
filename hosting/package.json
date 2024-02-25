@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-popover": "^1.0.7",
     "@radix-ui/react-slot": "^1.0.2",
     "@react-spring/web": "^9.7.3",
@@ -24,7 +25,8 @@
     "react-tinder-card": "^1.6.4",
     "tailwind": "^4.0.0",
     "tailwind-merge": "^2.2.1",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/node": "20.10.8",
