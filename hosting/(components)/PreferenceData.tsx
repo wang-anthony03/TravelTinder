@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useCallback, MouseEventHandler } from "react";
-import { db } from "../firebase";
+import { db } from "../app/firebase";
 import {
   collection,
   addDoc,
@@ -15,7 +15,7 @@ const SubmitIdeasForm = ({ pollKey: lobbyKey, userId }) => {
   userId = "1234";
   const [idea, setIdea] = useState("");
 
-  const handleSubmit: MouseEventHandler<HTMLInputElement> = useCallback(
+  const handleSubmit: MouseEventHandler<HTMLFormElement> = useCallback(
     async (e) => {
       e.preventDefault();
       if (!idea.trim()) {
