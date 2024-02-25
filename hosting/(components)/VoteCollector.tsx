@@ -47,24 +47,17 @@ function VoteCollector({ suggestions, onVotesCollected }) {
               <div
                 style={{
                   backgroundColor: "white",
+                  fontSize: "24px",
+                  border: "1px solid #ccc",
+                  borderRadius: "10px",
+                  padding: "10px",
                   maxWidth: "350px",
                   userSelect: "none",
+                  textAlign: "center",
                 }}
               >
                 {suggestion.suggestion} - {suggestion.reasoning}
               </div>
-              {/* <div
-                style={{
-                  backgroundImage:
-                    "url(" +
-                    "https://raw.githubusercontent.com/3DJakob/react-tinder-card-demo/master/public/img" +
-                    suggestion.url +
-                    ")",
-                }}
-                className="card"
-              >
-                <h3>{suggestion.name}</h3>
-              </div> */}
             </TinderCard>
           ))}
         </div>
