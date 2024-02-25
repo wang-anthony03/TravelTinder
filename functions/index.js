@@ -36,14 +36,14 @@ We asked the members of the group, "What do you want to do during this trip?", a
 };
 
 exports.generateIdeas = functions.https.onRequest(async (request, response) => {
-  res.set('Access-Control-Allow-Origin', '*');
+  response.set('Access-Control-Allow-Origin', '*');
 
-  if (req.method === 'OPTIONS') {
+  if (request.method === 'OPTIONS') {
     // Send response to OPTIONS requests
-    res.set('Access-Control-Allow-Methods', 'GET');
-    res.set('Access-Control-Allow-Headers', 'Content-Type');
-    res.set('Access-Control-Max-Age', '3600');
-    res.status(204).send('');
+    response.set('Access-Control-Allow-Methods', 'GET');
+    response.set('Access-Control-Allow-Headers', 'Content-Type');
+    response.set('Access-Control-Max-Age', '3600');
+    response.status(204).send('');
   }
 
   functions.logger.info("body:" + JSON.stringify(request.body), { structuredData: true });
@@ -57,6 +57,7 @@ exports.generateIdeas = functions.https.onRequest(async (request, response) => {
   );
   const openai = new OpenAI({ apiKey: functions.config().OPENAI_API_KEY });
   openai.chat.completions.create({
+    model: "gpt-4-turbo-preview",
     messages: [
       {
         role: "system",
