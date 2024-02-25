@@ -20,9 +20,9 @@ const UsernameField: React.FC<UsernameFieldProps> = ({ onSubmit }) => {
 
   return (
     <div>
-      <p className={styles.text__header}>Let's get some information</p>
+      <p className={styles.text__header_normal}>Let's get some information</p>
       <div>
-        <label className={styles.text__header} htmlFor="firstName">Name: </label>
+        <label className={styles.text__header_normal} htmlFor="firstName">Name: </label>
         <input
           className = {styles.input__field}
           type="text"
@@ -32,7 +32,7 @@ const UsernameField: React.FC<UsernameFieldProps> = ({ onSubmit }) => {
           placeholder="Enter Here"
         />
       </div>
-      <div className={styles.text__header__align}>
+      <div className={styles.text__header__align__normal}>
         {name && <p>Hello, {name}!</p>}
       </div>
 

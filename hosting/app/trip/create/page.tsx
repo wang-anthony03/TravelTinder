@@ -131,7 +131,7 @@ export default function CreateEvent({ params }) {
 
   return (
     <div className="flex flex-col self-end py-11 mt-8 max-w-full text-5xl font-bold tracking-tighter text-black shadow-sm  bg-opacity-50 p-10 bg-white rounded-3xl w-[589px] max-md:pl-5 max-md:text-4xl">
-      <div className="max-md:max-w-full max-md:text-4xl tracking-tight">
+      <div className="max-md:max-w-full max-md:text-4xl tracking-tight text-white">
         <TextTransition springConfig={presets.wobbly}>
           {TEXTS[index % TEXTS.length]}
         </TextTransition>
@@ -139,14 +139,14 @@ export default function CreateEvent({ params }) {
       {lobbyId.length === 0 ? (
         <>
         <textarea
-            className="outline-none bg-transparent mt-8 text-4xl placeholder:font-black placeholder:opacity-100 placeholder:font-medium font-medium tracking-wider max-md:max-w-full"
+            className="outline-none bg-transparent mt-8 text-4xl placeholder:font-white placeholder:opacity-100 placeholder:font-medium font-medium tracking-wider max-md:max-w-full placeholder:text-white"
             placeholder="A fun little club trip.."
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
-          <p className="text-2xl tracking-normal">Give a description</p>
+          <p className="text-2xl tracking-normal text-white">Give a description</p>
           <textarea
-            className="outline-none bg-transparent my-8 text-3xl placeholder:font-black placeholder:opacity-100 placeholder:font-medium font-medium tracking-wider max-md:max-w-full"
+            className="outline-none bg-transparent my-8 text-3xl placeholder:font-black placeholder:opacity-100 placeholder:font-medium font-medium tracking-wider max-md:max-w-full placeholder:text-white"
             placeholder="We’re going to Ubad, Indonesia for a few weeks in May
         ...."
             value={description}
@@ -198,7 +198,7 @@ export default function CreateEvent({ params }) {
         </PopoverContent>
       </Popover>
       <div className="grid w-full max-w-sm items-center gap-1.5">
-      <Label htmlFor="picture">Add a header (Optional)</Label>
+      <Label htmlFor="picture" className={styles.text__header_black}>Add a header (Optional)</Label>
       <Input id="picture" type="file" />
     </div>
     </div>

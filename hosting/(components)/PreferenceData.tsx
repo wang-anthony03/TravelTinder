@@ -49,7 +49,7 @@ const SubmitIdeasForm: React.FC<PreferenceFieldProps> = ({
 
   return (
     <div style={{ maxWidth: "600px", margin: "0 auto" }}>
-      <h2 className={styles.text__header}>Submit Your Ideas</h2>
+      <h2 className={styles.text__header_normal}>Submit Your Ideas</h2>
       <form
         onSubmit={handleSubmit}
         style={{ display: "flex", flexDirection: "column" }}
