@@ -69,9 +69,9 @@ export default function Page() {
           <div className="mt-24 text-5xl tracking-tighter text-center">
             Interested?
           </div>
-          <div className="justify-center px-12 py-4 mt-6 text-5xl tracking-tighter text-center whitespace-nowrap border-4 border-black border-solid rounded-3xl">
+          <a href="/trip/create" className="justify-center px-12 py-4 mt-6 text-5xl tracking-tighter text-center whitespace-nowrap border-4 border-black border-solid rounded-3xl">
             Create a Trip
-          </div>
+          </a>
         </div>
       </div>
     </div>
