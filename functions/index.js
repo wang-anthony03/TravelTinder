@@ -19,11 +19,9 @@ const WHAT_PEOPLE_WANT_TO_DO = [
 const createPrompt = (
   names,
   suggestions,
-  tripLocation,
-  startDate,
-  endDate
+  description,
 ) => {
-  let prompt = `A group of friends is deciding on how to spend their time for an upcoming trip to ${tripLocation} from ${startDate} to ${endDate}. How exciting!
+  let prompt = `A group of friends is deciding on how to spend their time for an upcoming trip. Here's a description of what they have planned: "${description}". How exciting!
 We asked the members of the group, "What do you want to do during this trip?", and here are their responses:
 `;
   for (let i = 0; i < suggestions.length; i++) {
@@ -47,13 +45,11 @@ exports.generateIdeas = functions.https.onRequest(async (request, response) => {
   }
 
   functions.logger.info("body:" + JSON.stringify(request.body), { structuredData: true });
-  const { names, suggestions, tripLocation, startDate, endDate } = request.body;
+  const { names, suggestions, description } = request.body;
   const prompt = createPrompt(
     names,
     suggestions,
-    tripLocation,
-    startDate,
-    endDate
+    description,
   );
   const openai = new OpenAI({ apiKey: functions.config().OPENAI_API_KEY });
   openai.chat.completions.create({
