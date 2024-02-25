@@ -10,8 +10,8 @@ import {
   getDoc,
 } from "firebase/firestore";
 
-const SubmitIdeasForm = ({ pollKey, userId }) => {
-  pollKey = "1234";
+const SubmitIdeasForm = ({ pollKey: lobbyKey, userId }) => {
+  lobbyKey = "1234";
   userId = "1234";
   const [idea, setIdea] = useState("");
 
@@ -23,14 +23,8 @@ const SubmitIdeasForm = ({ pollKey, userId }) => {
       }
 
       try {
-        // const pollDocumentRef = doc(db, `/polls/${pollKey}`);
-        // await updateDoc(pollDocumentRef, {
-        //   [`ideas.1234`]: idea,
-        //   x: "y",
-        // });
-        // console.log("Idea submitted:", idea);
         // Create an initial document to update.
-        const pollDoc = doc(db, "polls", pollKey);
+        const pollDoc = doc(db, "lobbies", lobbyKey);
         // To update age and favorite color:
         await updateDoc(pollDoc, {
           [`ideas.${userId}`]: idea,
@@ -40,7 +34,7 @@ const SubmitIdeasForm = ({ pollKey, userId }) => {
         console.error("Error submitting idea:", error);
       }
     },
-    [idea, pollKey, userId]
+    [idea, lobbyKey, userId]
   );
 
   return (
