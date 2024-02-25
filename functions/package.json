@@ -9,9 +9,8 @@
     "logs": "firebase functions:log"
   },
   "engines": {
-    "node": 18
+    "node": "18"
   },
-  "node": 16,
   "main": "index.js",
   "dependencies": {
     "firebase-admin": "^11.5.0",

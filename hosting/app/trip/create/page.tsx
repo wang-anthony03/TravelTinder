@@ -1,29 +1,25 @@
 "use client";
 
-import * as React from "react";
-import { useCallback, useState, useEffect } from "react";
-import { db } from "../../firebase";
 import { addDoc, collection } from "firebase/firestore";
+import * as React from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FaRegCopy } from "react-icons/fa";
 import TextTransition, { presets } from "react-text-transition";
+import { db } from "../../firebase";
 
-import { addDays, format } from "date-fns"
-import { Calendar as CalendarIcon } from "lucide-react"
-import { DateRange } from "react-day-picker"
+import { addDays, format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { DateRange } from "react-day-picker";
 
- 
-import { cn } from "../../../@/lib/utils";
 import { Button } from "../../../@/components/ui/button";
 import { Calendar } from "../../../@/components/ui/calendar";
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { cn } from "../../../@/lib/utils";
 
-import styles from "../../../(components)/Chunk.module.css"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "../../../@/components/ui/popover"
+} from "../../../@/components/ui/popover";
 
 const TEXTS = [
   "Go to the Beach",
@@ -50,10 +46,6 @@ const TEXTS = [
   "Take a Hot Air Balloon Ride",
 ];
 
-import { Metadata } from 'next'
-
-import { UUID } from "crypto";
-
 // export const metadata: Metadata = {
 //  title: 'Create Event | Trippl',
 //   description: 'Create a new event',
@@ -64,7 +56,7 @@ export default function CreateEvent({ params }) {
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: new Date(),
     to: addDays(new Date(), 7),
-  })
+  });
 
   const shareOrCopy = () => {
     let url = `https://myexpo-8ff01.web.app/trip/${lobbyId}`;
@@ -115,10 +107,11 @@ export default function CreateEvent({ params }) {
     }
 
     try {
-      // if(document.getElementById("i"))
-
       const docRef = await addDoc(collection(db, "lobbies"), {
+        title,
         description,
+        startDate: date.from.toISOString(),
+        endDate: date.to.toISOString(),
         code,
       });
       const lobbyId = docRef.id;
@@ -130,7 +123,10 @@ export default function CreateEvent({ params }) {
   }, [description]);
 
   return (
-    <div className="flex flex-col self-end py-11 mt-8 max-w-full text-5xl font-bold tracking-tighter text-black shadow-sm  bg-opacity-50 p-10 bg-white rounded-3xl w-[589px] max-md:pl-5 max-md:text-4xl">
+    <div
+      className="flex flex-col self-end py-11 mt-8 max-w-full text-5xl font-bold tracking-tighter text-black shadow-sm  bg-opacity-50 p-10 bg-white rounded-3xl w-[589px] max-md:pl-5 max-md:text-4xl"
+      style={{ margin: "0 auto" }}
+    >
       <div className="max-md:max-w-full max-md:text-4xl tracking-tight text-white">
         <TextTransition springConfig={presets.wobbly}>
           {TEXTS[index % TEXTS.length]}
@@ -138,13 +134,15 @@ export default function CreateEvent({ params }) {
       </div>
       {lobbyId.length === 0 ? (
         <>
-        <textarea
+          <textarea
             className="outline-none bg-transparent mt-8 text-4xl placeholder:font-white placeholder:opacity-100 placeholder:font-medium font-medium tracking-wider max-md:max-w-full placeholder:text-white"
             placeholder="A fun little club trip.."
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
-          <p className="text-2xl tracking-normal text-white">Give a description</p>
+          <p className="text-2xl tracking-normal text-white">
+            Give a description
+          </p>
           <textarea
             className="outline-none bg-transparent my-8 text-3xl placeholder:font-black placeholder:opacity-100 placeholder:font-medium font-medium tracking-wider max-md:max-w-full placeholder:text-white"
             placeholder="We’re going to Ubad, Indonesia for a few weeks in May
@@ -211,11 +209,14 @@ export default function CreateEvent({ params }) {
         </>
       ) : (
         <div className="p-16 text-3xl tracking-normal">
-          Your event "{description}" has been created. <br /><br />  Share the private url to
-          get input
+          Your event "{description}" has been created. <br />
+          <br /> Share the private url to get input
           <br />
           <div className="flex flex-row justify-between mt-5">
-            <a href={`/trip/${lobbyId}`}className="btn text-4xl text-white flex flex-row bg-gray-500 block">
+            <a
+              href={`/trip/${lobbyId}`}
+              className="btn text-4xl text-white flex flex-row bg-gray-500 block"
+            >
               Go to event
             </a>
             <button
