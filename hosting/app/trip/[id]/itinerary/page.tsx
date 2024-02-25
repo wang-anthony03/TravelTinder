@@ -104,8 +104,8 @@ export default function ViewItinerary({ params }) {
 
   return (
     <div className="flex flex-col px-8 py-5 text-6xl font-bold text-black bg-white shadow-sm max-w-[888px] rounded-[30px] max-md:px-5 max-md:text-4xl">
-      <div className="max-md:max-w-full max-md:text-4xl">Sample I-ternary</div>
-      <div className="mt-5 text-4xl tracking-widest max-md:max-w-full">
+      <div className="max-md:max-w-full max-md:text-4xl">Sample Itinerary</div>
+      <div className="mt-5 text-4xl tracking-widest font-medium max-md:max-w-full">
         We don’t try to be perfect. We give you a starting point. Edit as you
         would like!
       </div>
